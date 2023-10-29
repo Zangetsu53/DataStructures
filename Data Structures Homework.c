@@ -20,17 +20,17 @@ struct randNumList{
 	struct randNumList *next;
 };
 
-struct numberList *addFront(struct numberList *head, int x){
-	struct numberList *temp = (struct numberList *)malloc(sizeof(struct head));
-	temp->data = x;
+struct numberList *addFront(struct numberList* head, int x){
+	struct numberList *temp = (struct numberList *)malloc(sizeof(head));
+	temp->number = x;
 	temp->	next = head;
 	head = temp;
 	return head;	
 }
 
-struct numberList *addLast(struct numberList *head, int x){
-	struct numberList *temp = (struct numberList *)malloc(sizeof(struct head));
-	temp->data = x;
+struct numberList *addLast(struct numberList* head, int x){
+	struct numberList *temp = (struct numberList *)malloc(sizeof(head));
+	temp->number = x;
 	temp->	next = NULL;
 	if (head == NULL){
 		head = temp;
@@ -45,7 +45,24 @@ struct numberList *addLast(struct numberList *head, int x){
 	return head;
 }
 
-void oddsFrontEvensEnd(struct numberList *head){
+struct randNumList *addLastRand(struct randNumList* head, int x){
+	struct randNumList *temp = (struct randNumList *)malloc(sizeof(head));
+	temp->num = x;
+	temp->	next = NULL;
+	if (head == NULL){
+		head = temp;
+	}
+	else{
+		struct numberList *last = head;
+		while(last->next != NULL){
+			last = last->next;
+		}
+		last->next = temp;
+	}
+	return head;
+}
+
+void oddsFrontEvensEnd(struct numberList* head){
 	int x;
 	printf("Please enter a positive number\n");
 	scanf("%d", &x);
@@ -78,12 +95,12 @@ void bubbleSort(int arr[], int n) {
 }
 
 
-void organizedNums(struct randNumList *head){
+void organizedNums(struct randNumList* head){
 	srand(time(NULL));
 	int randNum, i, array[100];
 	for (i=0; i<100; i++){
 		randNum = rand() %1000 + 1;
-		addLast(head, randNum);
+		addLastRand(head, randNum);
 	}
 	struct randNumList *temp;
 	temp= head;
@@ -97,11 +114,11 @@ void organizedNums(struct randNumList *head){
 	
 	printf("Organized List: \n");
     for (i = 0; i < 100; i++) {
-        printf("%d -> ", arr[i]);
+        printf("%d -> ", array[i]);
     }
 }
 
-void studentsInfo(struct students *head){
+void studentsInfo(struct students* head){
 	int counter;
 	counter=1;
 	struct students *temp;
@@ -118,7 +135,7 @@ void studentsInfo(struct students *head){
 }
 
 
-void searchStudent(struct students *head, char key[40]){
+void searchStudent(struct students* head, char key[40]){
 	if (head == NULL){
 		printf("List is empty");
 	}
@@ -129,7 +146,7 @@ void searchStudent(struct students *head, char key[40]){
 			printf("There is such a student");
 		}
 		else{
-			while(temp->next != NULL && temp->next != key){
+			while(temp->next != NULL && temp->next->name != key){
 				temp = temp->next;
 			}
 			if (temp->next == NULL){
@@ -142,7 +159,7 @@ void searchStudent(struct students *head, char key[40]){
 	}
 }
 
-struct students *del(struct students *head, char key[40]){
+struct students *del(struct students* head, char key[40]){
 	if (head == NULL) {
 		return head;
 	}
@@ -151,10 +168,10 @@ struct students *del(struct students *head, char key[40]){
 		temp = head;
 		if(head->name == key){
 			head == head->next;
-			free(temp;)
+			free(temp);
 		}
 		else{
-			while(temp->next != NULL && temp->next != key){
+			while(temp->next != NULL && temp->next->name != key){
 				temp = temp->next;
 			}
 			if (temp->next == NULL){
@@ -168,8 +185,10 @@ struct students *del(struct students *head, char key[40]){
 	}
 }
 
-void printLongestName(struct students *head){
+void printLongestName(struct students* head){
 	char tempName[40];
+	struct students *temp;
+	temp = head;
 	if (head == NULL){
 		printf("The list is empty");
 	}
@@ -199,20 +218,10 @@ int main(){
 		case 3 :
 		case 4 :
 		case 5 :
-		case 6 :	
+		case 6 :
+		default:
+			printf("wrong input!");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
